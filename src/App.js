@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from "@react-three/fiber";
+import "./App.css";
+import Box from "./components/Box";
+import { Sky, OrbitControls } from "@react-three/drei"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Canvas colorManagement>
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[0, 10, 0]} intensity={1.5} />
+      <pointLight position={[-10, 0, -10]} intensity={0.5} />
+      <pointLight position={[0, -10, 0]} intensity={1.5} />
+      <Box position={[-1, 0, 0]} />
+      <Box position={[1, 0, 0]} />
+      {/* creating a floor... */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3, 0]}>
+        <planeBufferGeometry args={[100,100]}/>
+        <meshStandardMaterial color="lightblue"/>
+      </mesh>
+      <Sky distance={4000} sunPosition={[0,1,0]} inclination={0} azimuth={0.25}/>
+      <OrbitControls />
+    </Canvas>
   );
 }
 
